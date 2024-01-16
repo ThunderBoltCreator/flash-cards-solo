@@ -1,13 +1,11 @@
 import { useState } from 'react'
 
+import { Profile } from 'pages/profile'
 import { Avatar } from 'shared/ui/avatar'
 import { Button } from 'shared/ui/button/button'
 import { Checkbox } from 'shared/ui/checkbox/checkbox'
-import { DropDown } from 'shared/ui/dropDownMenu'
 import { Header } from 'shared/ui/header/header'
-import { Select } from 'shared/ui/select/select'
 import { Slider } from 'shared/ui/slider'
-import { Table } from 'shared/ui/table/table'
 import { TextFields } from 'shared/ui/text-field'
 import { CardSwitcher } from 'widgets/card-switcher/ui/card-switcher'
 
@@ -40,22 +38,7 @@ export function App() {
       />
       <CardSwitcher />
       <Checkbox className={'app_center'} label={'Checkbox'} />
-      <div>
-        <Select
-          items={[
-            {
-              label: 'select 1',
-              value: 'Select 1',
-            },
-            { label: 'select 2', value: 'Select 2' },
-            { label: 'select 3', value: 'Select 3' },
-          ]}
-        />
-        <Table />
-      </div>
-
-      <DropDown.ProfileMenu />
-      <DropDown.ManagementMenu />
+      <Profile />
     </div>
   )
 }
