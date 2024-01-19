@@ -32,7 +32,8 @@ export const Button = <T extends ElementType = 'button'>({
       s[variant],
       fullWidth ? s.fullWidth : null,
       className ? className : null,
-      disabled ? s.disabled : null
+      disabled ? s.disabled : null,
+      children ? '' : s.withOutChildren
     ),
   }
 

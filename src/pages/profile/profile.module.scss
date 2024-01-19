@@ -1,11 +1,14 @@
-.root {
+.container {
+  min-width: 420px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.content {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-
-  max-width: 420px;
-  margin: 0 auto;
-  padding: 33px 25px 41px;
 }
 
 .title {
@@ -15,4 +18,14 @@
 .personalInfo {
   margin-bottom: 13px;
   text-align: center;
+}
+
+.card {
+  padding: 33px 25px 41px;
+}
+
+.editButton {
+  position: absolute;
+  top: 0;
+  right: 0;
 }

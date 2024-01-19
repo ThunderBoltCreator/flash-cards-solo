@@ -37,7 +37,9 @@ export function App() {
         value={sliderValues}
       />
       <CardSwitcher />
-      <Checkbox className={'app_center'} label={'Checkbox'} />
+      <div>
+        <Checkbox className={'app_center'} label={'Checkbox'} />
+      </div>
       <Profile />
     </div>
   )

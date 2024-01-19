@@ -1,0 +1,27 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.buttonsBlock {
+  display: flex;
+  column-gap: 15px;
+  width: 100%;
+  margin-top: 36px;
+}
+
+.avatarWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.editIconWrapper {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.editIcon {
+  padding: 0;
+}
