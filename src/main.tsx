@@ -7,6 +7,7 @@ import ReactDOM from 'react-dom/client'
 import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/700.css'
 import 'shared/styles/index.scss'
+import 'react-toastify/dist/ReactToastify.css'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

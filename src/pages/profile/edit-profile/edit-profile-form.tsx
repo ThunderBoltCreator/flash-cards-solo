@@ -1,57 +1,77 @@
 import type { ProfileData } from 'pages/profile/profile'
 
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { zodResolver } from '@hookform/resolvers/zod'
 import ArrowBack from 'shared/assets/icons/arrow-back'
 import EditIcon from 'shared/assets/icons/edit-icon'
+import { ACCEPTED_IMAGES_FORMATS, IMAGE_MAX_SIZE } from 'shared/const'
 import { Avatar } from 'shared/ui/avatar'
 import { Button } from 'shared/ui/button'
 import { ImageUploader } from 'shared/ui/file-uploader/image-uploader'
 import { ControlledTextField } from 'shared/ui/text-field/controlled/text-filed-controlled'
+import { z } from 'zod'
 
 import s from './edit-profile-form.module.scss'
 type EditProfileFormProps = {
-  changeData: <T extends Partial<ProfileData>>(newData: T) => void
-  data: {
+  formData: {
     avatar: string
     name: string
   }
   onClose: () => void
+  onDataChange: <T extends Partial<ProfileData>>(newData: T) => void
 }
 
 type FormState = {
-  image: FileList
   name: string
 }
 
-export function EditProfileForm({ changeData, data, onClose }: EditProfileFormProps) {
-  const [img, setImg] = useState('')
-  const { control, handleSubmit, register, watch } = useForm<FormState>()
+const editProfileSchema = z.object({
+  name: z.string().max(10),
+})
 
+const imageSchema = z
+  .instanceof(File)
+  .refine(
+    file => file.size <= IMAGE_MAX_SIZE,
+    `Max image size is 1MB. The file will not be uploaded.`
+  )
+  .refine(
+    file => ACCEPTED_IMAGES_FORMATS.includes(file.type),
+    'Only .jpg, .jpeg, .png, .svg and .webp formats are supported. The file will not be uploaded.'
+  )
+
+export function EditProfileForm({ formData, onClose, onDataChange }: EditProfileFormProps) {
+  const {
+    control,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<FormState>({
+    resolver: zodResolver(editProfileSchema),
+  })
+  const [newImg, setNewImg] = useState(formData.avatar)
+
+  console.log(errors)
   const onSubmit = (data: FormState) => {
-    console.log(data)
-    changeData({ avatar: img, name: data.name })
-
+    onDataChange({ avatar: newImg, name: data.name })
     onClose()
   }
 
-  const ava = watch('image')
-
-  useEffect(() => {
-    if (ava && ava.length > 0) {
-      setImg(URL.createObjectURL(ava[0]))
+  const onChangeImage = (image: File) => {
+    if (image) {
+      setNewImg(URL.createObjectURL(image))
     }
-  }, [ava])
+  }
 
   return (
     <>
       <form className={s.root} onSubmit={handleSubmit(onSubmit)}>
         <div className={s.avatarWrapper}>
-          <Avatar size={96} src={img || data.avatar} />
+          <Avatar size={96} src={newImg} />
           <ImageUploader
-            {...register('image')}
-            className={s.editIconWrapper}
+            className={s.imageUploader}
+            onImageChange={onChangeImage}
             trigger={
               <Button
                 as={'span'}
@@ -60,11 +80,13 @@ export function EditProfileForm({ changeData, data, onClose }: EditProfileFormPr
                 variant={'secondary'}
               />
             }
+            validationSchema={imageSchema}
           />
         </div>
         <ControlledTextField
           control={control}
-          defaultValue={data.name}
+          defaultValue={formData.name}
+          errorMessage={errors.name?.message}
           label={'Nickname'}
           name={'name'}
         />

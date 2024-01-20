@@ -3,7 +3,7 @@ import type { TextFieldProps } from 'shared/ui/text-field/text-field'
 
 import { useController } from 'react-hook-form'
 
-import { TextFields } from 'shared/ui/text-field/index'
+import { TextFields } from 'shared/ui/text-field'
 
 type ControlledTextFieldProps<T extends FieldValues> = UseControllerProps<T> &
   Omit<TextFieldProps, 'id' | 'onChange' | 'value'>

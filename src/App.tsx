@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Flip, ToastContainer } from 'react-toastify'
 
 import { Profile } from 'pages/profile'
 import { Avatar } from 'shared/ui/avatar'
@@ -41,6 +42,14 @@ export function App() {
         <Checkbox className={'app_center'} label={'Checkbox'} />
       </div>
       <Profile />
+      <ToastContainer
+        autoClose={3000}
+        closeOnClick
+        newestOnTop
+        position={'bottom-left'}
+        theme={'dark'}
+        transition={Flip}
+      />
     </div>
   )
 }

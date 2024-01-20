@@ -4,10 +4,8 @@ import { useState } from 'react'
 
 import { clsx } from 'clsx'
 import { EditProfileForm } from 'pages/profile/edit-profile/edit-profile-form'
-import { PersonalInfo } from 'pages/profile/personal-info/personal-info'
-import EditIcon from 'shared/assets/icons/edit-icon'
+import { ProfileBody } from 'pages/profile/profile-body'
 import LogoutIcon from 'shared/assets/icons/log-out'
-import { Avatar } from 'shared/ui/avatar'
 import { Button } from 'shared/ui/button'
 import { Card } from 'shared/ui/card/card'
 import { Typography } from 'shared/ui/typography'
@@ -36,32 +34,20 @@ export function Profile({}: ProfileProps) {
         <Typography className={s.title} variant={'large'}>
           {`Profile ${editMode ? 'edit' : ''}`}
         </Typography>
-        {!editMode ? (
-          <>
-            <Button
-              className={s.editButton}
-              icon={<EditIcon />}
-              iconPosition={'right'}
-              onClick={() => setEditMode(true)}
-              variant={'secondary'}
-            />
-            <Avatar size={96} src={data.avatar} />
-            <PersonalInfo email={data.email} name={data.name} />
-          </>
+
+        {editMode ? (
+          <EditProfileForm
+            formData={{ avatar: data.avatar, name: data.name }}
+            onClose={() => setEditMode(false)}
+            onDataChange={changeData}
+          />
         ) : (
           <>
-            <EditProfileForm
-              changeData={changeData}
-              data={{ avatar: data.avatar, name: data.name }}
-              onClose={() => setEditMode(false)}
-            />
+            <ProfileBody data={data} setEditMode={setEditMode} />
+            <Button icon={<LogoutIcon />} variant={'secondary'}>
+              <Typography variant={'subtitle2'}>Logout</Typography>
+            </Button>
           </>
-        )}
-
-        {!editMode && (
-          <Button icon={<LogoutIcon />} variant={'secondary'}>
-            <Typography variant={'subtitle2'}>Logout</Typography>
-          </Button>
         )}
       </div>
     </Card>
