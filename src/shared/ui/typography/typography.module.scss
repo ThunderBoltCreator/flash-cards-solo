@@ -68,15 +68,17 @@
 }
 
 .link1 {
+  cursor: pointer;
+
   font-size: var(--font-size-s);
   line-height: var(--line-height-m);
-
-  // line-height: 1.7143;
   color: var(--color-info-500);
   text-decoration-line: underline;
 }
 
 .link2 {
+  cursor: pointer;
+
   font-size: var(--font-size-xs);
   font-weight: 400;
   line-height: var(--line-height-s);

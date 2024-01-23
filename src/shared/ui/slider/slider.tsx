@@ -79,7 +79,7 @@ export function Slider({
   return (
     <>
       <div className={styles.container}>
-        <TextFields.BaseField
+        <TextFields.base
           className={styles.score}
           disabled={disabled}
           onBlur={onBlur}
@@ -104,7 +104,7 @@ export function Slider({
           <Sl.Thumb className={styles.thumb} />
           <Sl.Thumb className={styles.thumb} />
         </Sl.Root>
-        <TextFields.BaseField
+        <TextFields.base
           className={styles.score}
           disabled={disabled}
           onBlur={onBlur}

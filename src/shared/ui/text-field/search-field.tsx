@@ -1,12 +1,11 @@
-import type { TextFieldProps } from './text-field'
+import type { TextFieldProps } from 'shared/ui/text-field/text-fields'
 
 import { useId, useState } from 'react'
 import type { ChangeEvent } from 'react'
 
 import Cross from 'shared/assets/icons/cross'
 import Loup from 'shared/assets/icons/loup'
-
-import { BaseField } from './text-field'
+import { TextFields } from 'shared/ui/text-field/text-fields'
 export type SearchFieldProps = {
   onButtonClick?: () => void
 } & Omit<TextFieldProps, 'leftIcon' | 'rightIcon' | 'type'> & {}
@@ -38,7 +37,7 @@ export function SearchField({ onButtonClick, ...props }: SearchFieldProps) {
   )
 
   return (
-    <BaseField
+    <TextFields.base
       id={id}
       leftIcon={value ? SearchIconButton : SearchIconLabel}
       onChange={onChangeField}

@@ -1,9 +1,6 @@
-import { PasswordField } from './password-field'
-import { SearchField } from './search-field'
-import { BaseField } from './text-field'
+import { PasswordFields } from 'shared/ui/text-field/password-fields'
+import { TextFields } from 'shared/ui/text-field/text-fields'
 
-export const TextFields = {
-  BaseField,
-  Password: PasswordField,
-  Search: SearchField,
-}
+import { SearchField } from './search-field'
+
+export { PasswordFields, SearchField, TextFields }

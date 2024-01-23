@@ -1,9 +1,9 @@
 import type { ProfileData } from 'pages/profile/profile'
 
-import { PersonalInfo } from 'pages/profile/personal-info/personal-info'
 import EditIcon from 'shared/assets/icons/edit-icon'
 import { Avatar } from 'shared/ui/avatar'
 import { Button } from 'shared/ui/button'
+import { Typography } from 'shared/ui/typography'
 
 import s from './profile.module.scss'
 
@@ -22,7 +22,14 @@ export function ProfileBody({ data, setEditMode }: Props) {
         variant={'secondary'}
       />
       <Avatar size={96} src={data.avatar} />
-      <PersonalInfo email={data.email} name={data.name} />
+      <div className={s.personalInfo}>
+        <Typography as={'h2'} variant={'h1'}>
+          {data.name}
+        </Typography>
+        <Typography as={'h2'} variant={'body2'}>
+          {data.email}
+        </Typography>
+      </div>
     </>
   )
 }

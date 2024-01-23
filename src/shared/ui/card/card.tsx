@@ -15,7 +15,7 @@ export function Card<T extends ElementType = 'div'>({
   ...props
 }: CardProps<T> & Omit<ComponentPropsWithoutRef<T>, keyof CardProps<T>>) {
   const Component = as || 'div'
-  const styles = clsx(s.root, className)
+  const styles = clsx(s.card, className)
 
   return <Component {...props} className={styles} />
 }

@@ -1,13 +1,17 @@
 import { useState } from 'react'
 import { Flip, ToastContainer } from 'react-toastify'
 
+import { CheckEmailPage, NewPasswordPage } from 'features/forgot-password'
+import { ForgotPassword } from 'pages/auth/forgot-password'
+import { SignIn } from 'pages/auth/sign-in'
+import { SignUp } from 'pages/auth/sign-up'
 import { Profile } from 'pages/profile'
 import { Avatar } from 'shared/ui/avatar'
 import { Button } from 'shared/ui/button/button'
-import { Checkbox } from 'shared/ui/checkbox/checkbox'
+import { Checkboxes } from 'shared/ui/checkbox'
 import { Header } from 'shared/ui/header/header'
 import { Slider } from 'shared/ui/slider'
-import { TextFields } from 'shared/ui/text-field'
+import { PasswordFields, SearchField, TextFields } from 'shared/ui/text-field'
 import { CardSwitcher } from 'widgets/card-switcher/ui/card-switcher'
 
 export function App() {
@@ -26,9 +30,9 @@ export function App() {
         }
       />
       <Button as={'div'}>Knopka</Button>
-      <TextFields.Search placeholder={'sdasds'} />
-      <TextFields.Password placeholder={'sdasds'} />
-      <TextFields.BaseField placeholder={'sdasds'} />
+      <SearchField placeholder={'sdasds'} />
+      <PasswordFields.base placeholder={'sdasds'} />
+      <TextFields.base placeholder={'sdasds'} />
       <Slider
         className={'center'}
         max={50}
@@ -39,9 +43,14 @@ export function App() {
       />
       <CardSwitcher />
       <div>
-        <Checkbox className={'app_center'} label={'Checkbox'} />
+        <Checkboxes.base className={'app_center'} label={'Checkbox'} />
       </div>
       <Profile />
+      <SignIn />
+      <SignUp />
+      <ForgotPassword />
+      <CheckEmailPage />
+      <NewPasswordPage />
       <ToastContainer
         autoClose={3000}
         closeOnClick

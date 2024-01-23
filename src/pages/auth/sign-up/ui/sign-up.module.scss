@@ -1,0 +1,39 @@
+.signUp {
+  width: 26.3rem;
+  margin: 0 auto;
+  padding: 2.06rem 2.25rem 1.81rem;
+  text-align: left;
+
+}
+
+.title {
+  margin-bottom: 1.69rem;
+}
+
+.fields {
+  width: 100%;
+  margin-bottom: 3.75rem;
+
+  .field {
+    &:not(:last-child) {
+      margin-bottom: 1.5rem;
+    }
+  }
+}
+
+
+.linkLoginLabel {
+  margin-bottom: 11px;
+
+  + a {
+    cursor: pointer;
+  }
+}
+
+.buttonSubmit {
+  margin-bottom: 1.25rem;
+}
+
+.linkLoginLabel {
+  margin-bottom: 0.69rem;
+}

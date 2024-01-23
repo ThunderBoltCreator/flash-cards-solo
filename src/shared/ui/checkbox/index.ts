@@ -1,4 +1,3 @@
-import { Checkbox } from './checkbox'
-import { ControlledCheckbox } from './controlled-checkbox'
+import { Checkboxes } from 'shared/ui/checkbox/checkboxes'
 
-export { Checkbox, ControlledCheckbox }
+export { Checkboxes }

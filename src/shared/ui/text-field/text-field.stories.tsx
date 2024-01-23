@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { TextFields } from './'
+import { PasswordFields, SearchField as Sf, TextFields } from './'
 
 const meta = {
   argTypes: {},
   args: {
     disabled: false,
   },
-  component: TextFields.BaseField,
+  component: TextFields.base,
   tags: ['autodocs'],
   title: 'Components/TextField',
-} satisfies Meta<typeof TextFields.BaseField>
+} satisfies Meta<typeof TextFields.base>
 
 export default meta
 type Story = StoryObj<typeof meta>
@@ -31,7 +31,7 @@ export const PasswordField: Story = {
     placeholder: 'Placeholder',
   },
   render: args => {
-    return <TextFields.Password {...args} />
+    return <PasswordFields.base {...args} />
   },
 }
 export const SearchField: Story = {
@@ -40,6 +40,6 @@ export const SearchField: Story = {
     placeholder: 'Placeholder',
   },
   render: args => {
-    return <TextFields.Search {...args} />
+    return <Sf {...args} />
   },
 }

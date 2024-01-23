@@ -1,11 +1,15 @@
+import type { FieldValues, PathValue, UseControllerProps } from 'react-hook-form'
+
 import { useId } from 'react'
 import type { ComponentPropsWithoutRef, ReactElement } from 'react'
+import { useController } from 'react-hook-form'
 
 import { clsx } from 'clsx'
 import { IconWrapper } from 'shared/ui/icon-wrapper'
 import { Typography } from 'shared/ui/typography'
 
 import s from './text-field.module.scss'
+
 export type TextFieldProps = {
   errorMessage?: string
   label?: string
@@ -13,7 +17,7 @@ export type TextFieldProps = {
   rightIcon?: ReactElement | null
 } & ComponentPropsWithoutRef<'input'>
 
-export function BaseField({
+function BaseField({
   className,
   disabled,
   errorMessage,
@@ -61,4 +65,27 @@ export function BaseField({
       )}
     </div>
   )
+}
+
+type ControlledTextFieldProps<T extends FieldValues> = UseControllerProps<T> &
+  Omit<TextFieldProps, 'id' | 'onChange' | 'value'>
+
+function ControlledTextField<T extends FieldValues>({
+  control,
+  defaultValue,
+  name,
+  rules,
+  shouldUnregister,
+  ...props
+}: ControlledTextFieldProps<T>) {
+  const {
+    field: { onChange, value },
+  } = useController({ control, defaultValue, name, rules, shouldUnregister })
+
+  return <BaseField onChange={onChange} value={value} {...props} />
+}
+
+export const TextFields = {
+  base: BaseField,
+  controlled: ControlledTextField,
 }

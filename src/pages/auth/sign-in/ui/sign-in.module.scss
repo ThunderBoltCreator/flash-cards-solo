@@ -1,0 +1,43 @@
+.signIn {
+  width: 26.3rem;
+  margin: 0 auto;
+  padding: 2.06rem 2.25rem 1.81rem;
+  text-align: left;
+}
+
+.title {
+  margin-bottom: 1.69rem;
+}
+
+
+.field {
+  width: 100%;
+
+  &:not(:last-child) {
+    margin-bottom: 1.5rem;
+  }
+}
+
+.checkbox {
+  align-self: flex-start;
+  margin-bottom: 6px;
+  padding: 6px;
+}
+
+.forgot {
+  cursor: pointer;
+  align-self: flex-end;
+  margin-bottom: 4.13rem;
+}
+
+ .buttonSubmit {
+   margin-bottom: 1.25rem;
+ }
+
+.registerLabel {
+  margin-bottom: 0.69rem;
+
+  + a {
+    cursor: pointer;
+  }
+}
