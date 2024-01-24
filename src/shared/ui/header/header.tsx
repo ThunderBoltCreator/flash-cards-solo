@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 
-import Logo from 'app/Logo'
 import { clsx } from 'clsx'
+import Logo from 'shared/Logo'
 
 import s from './header.module.scss'
 

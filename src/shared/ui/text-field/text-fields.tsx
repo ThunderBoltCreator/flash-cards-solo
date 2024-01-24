@@ -1,4 +1,4 @@
-import type { FieldValues, PathValue, UseControllerProps } from 'react-hook-form'
+import type { FieldValues, UseControllerProps } from 'react-hook-form'
 
 import { useId } from 'react'
 import type { ComponentPropsWithoutRef, ReactElement } from 'react'
