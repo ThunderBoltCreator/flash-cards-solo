@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 import { Flip, ToastContainer } from 'react-toastify'
 
 import { Layout } from 'shared/layouts/layout'
@@ -12,12 +12,14 @@ export function App() {
       header={
         <Header
           rightSlot={
-            <Avatar
-              alt={'Jerry'}
-              src={
-                'https://cdn.dribbble.com/users/536736/screenshots/2443094/media/ec35f1e2d8943cd0e0d9b6674a626894.png'
-              }
-            />
+            <Link to={'/profile'}>
+              <Avatar
+                alt={'Jerry'}
+                src={
+                  'https://cdn.dribbble.com/users/536736/screenshots/2443094/media/ec35f1e2d8943cd0e0d9b6674a626894.png'
+                }
+              />
+            </Link>
           }
         />
       }

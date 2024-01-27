@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 
 import { clsx } from 'clsx'
+import { useLoginMutation } from 'entities/session/api/session-api'
 import { Button } from 'shared/ui/button'
 import { Card } from 'shared/ui/card/card'
 import { Checkboxes } from 'shared/ui/checkbox'
@@ -15,10 +17,23 @@ type FieldsValues = {
 }
 
 export function SignIn() {
-  const { control } = useForm<FieldsValues>()
+  const [login, { isLoading }] = useLoginMutation()
+  const { control, handleSubmit } = useForm<FieldsValues>({
+    defaultValues: {
+      email: '',
+      password: '',
+      rememberMe: false,
+    },
+  })
+  const navigate = useNavigate()
+
+  const onSubmit = (data: FieldsValues) => {
+    console.log(data)
+    login(data).finally(() => navigate('/profile'))
+  }
 
   return (
-    <Card as={'form'} className={clsx(s.signIn)}>
+    <Card as={'form'} className={clsx(s.signIn)} onSubmit={handleSubmit(onSubmit)}>
       <Typography className={s.title} variant={'h1'}>
         Sign In
       </Typography>
@@ -48,7 +63,7 @@ export function SignIn() {
         Sign In
       </Button>
       <Typography className={s.registerLabel} variant={'body2'}>
-        Don't have an account?
+        Don`t have an account?
       </Typography>
       <Typography variant={'link2'}>Sign Up</Typography>
     </Card>

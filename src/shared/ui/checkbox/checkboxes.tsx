@@ -1,6 +1,5 @@
 import type { FieldValues, UseControllerProps } from 'react-hook-form'
 
-import { useState } from 'react'
 import type { ComponentPropsWithoutRef } from 'react'
 import { useController } from 'react-hook-form'
 
@@ -23,6 +22,7 @@ function Checkbox({
   disabled,
   label,
   onChange,
+  value,
   ...props
 }: CheckboxProps) {
   const styles = {
@@ -32,21 +32,20 @@ function Checkbox({
     label: clsx(s.label, disabled && s.disabled),
     root: clsx(s.root, className),
   }
-  const [check, setCheck] = useState(checked)
 
   return (
     <LabelRadix.Root asChild className={styles.root}>
       <Typography as={'label'} className={styles.label} variant={'body2'}>
         <CheckboxRadix.Root
-          checked={check}
+          checked={checked}
           className={styles.checkbox}
           defaultChecked={false}
           disabled={disabled}
-          onCheckedChange={value => setCheck(value)}
+          value={value}
           {...props}
         >
           <div className={styles.frame} />
-          {check && (
+          {checked && (
             <CheckboxRadix.Indicator className={styles.indicator}>
               <CheckboxIcon />
             </CheckboxRadix.Indicator>
@@ -79,7 +78,7 @@ function ControlledCheckbox<TFieldsValues extends FieldValues>({
     shouldUnregister,
   })
 
-  return <Checkbox checked={value} id={name} onChange={onChange} {...props} />
+  return <Checkbox checked={value} id={name} onCheckedChange={onChange} {...props} />
 }
 
 export const Checkboxes = {
