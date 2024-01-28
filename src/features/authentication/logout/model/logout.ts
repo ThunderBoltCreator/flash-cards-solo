@@ -8,6 +8,7 @@ export const logoutThunk = createAsyncThunk<void, void, { state: RootState }>(
   async (_, { dispatch }) => {
     dispatch(clearSession())
 
+    sessionApi.endpoints.logout
     console.log('ya tuta')
 
     await new Promise(resolve => setTimeout(resolve, 10))

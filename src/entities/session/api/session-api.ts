@@ -1,5 +1,6 @@
 import type { RequestLoginBody, ResponseLoginBody } from './types'
 
+import { onLogout } from 'entities/session/model/slice'
 import { baseApi } from 'shared/api/base-api'
 
 export const sessionApi = baseApi.injectEndpoints({
@@ -17,7 +18,6 @@ export const sessionApi = baseApi.injectEndpoints({
       },
     }),
     logout: build.mutation<void, void>({
-      invalidatesTags: ['ME'],
       query: () => ({ method: 'POST', url: '/v1/auth/logout' }),
     }),
   }),

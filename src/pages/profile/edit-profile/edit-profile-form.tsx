@@ -1,4 +1,4 @@
-import type { ProfileData } from 'pages/profile/profile'
+import type { ProfileData } from 'features/profile/ui/profile'
 
 import { useState } from 'react'
 import type { ChangeEvent } from 'react'
@@ -22,7 +22,6 @@ type EditProfileFormProps = {
     name: string
   }
   onClose: () => void
-  onDataChange: <T extends Partial<ProfileData>>(newData: T) => void
 }
 
 type FormState = {
@@ -44,7 +43,7 @@ const imageSchema = z
     'Only .jpg, .jpeg, .png, .svg and .webp formats are supported. The file will not be uploaded.'
   )
 
-export function EditProfileForm({ formData, onClose, onDataChange }: EditProfileFormProps) {
+export function EditProfileForm({ formData, onClose }: EditProfileFormProps) {
   const {
     control,
     formState: { errors },
@@ -55,7 +54,6 @@ export function EditProfileForm({ formData, onClose, onDataChange }: EditProfile
   const [newImg, setNewImg] = useState(formData.avatar)
 
   const onSubmit = (data: FormState) => {
-    onDataChange({ avatar: newImg, name: data.name })
     onClose()
   }
 

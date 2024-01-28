@@ -1,10 +1,8 @@
-import { Navigate, Outlet } from 'react-router-dom'
-
-import { useAppSelector } from 'app/store/hooks'
-import { selectIsAuth } from 'entities/session'
+import { Navigate, Outlet, useOutletContext } from 'react-router-dom'
 
 export function AuthGuard() {
-  const isAuth = useAppSelector(selectIsAuth)
+  // const isAuth = useAppSelector(selectIsAuth)
+  const { isAuth } = useOutletContext<{ isAuth: boolean }>()
 
   return isAuth ? <Outlet /> : <Navigate to={'/login'} />
 }

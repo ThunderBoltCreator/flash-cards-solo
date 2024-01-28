@@ -1,16 +1,14 @@
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query/react'
 
 import { fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { router } from 'app/routing/app-router'
 import { Mutex } from 'async-mutex'
 
 const mutex = new Mutex()
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://api.flashcards.andrii.es',
+  baseUrl: 'https://api.flashcards.andrii.es/',
   credentials: 'include',
-  prepareHeaders: headers => {
-    headers.append('x-auth-skip', 'true')
-  },
 })
 
 export const baseQueryWithRefresh: BaseQueryFn<
@@ -26,7 +24,7 @@ export const baseQueryWithRefresh: BaseQueryFn<
     if (!mutex.isLocked()) {
       const release = await mutex.acquire()
 
-      const reqResult = await baseQuery(
+      const refreshResult = await baseQuery(
         {
           method: 'POST',
           url: '/v1/auth/refresh-token',
@@ -35,8 +33,10 @@ export const baseQueryWithRefresh: BaseQueryFn<
         extraOptions
       )
 
-      if (reqResult.meta?.response?.status === 204) {
+      if (refreshResult.meta?.response?.status === 204) {
         baseQuery(args, api, extraOptions)
+      } else {
+        router.navigate('/login')
       }
 
       release()

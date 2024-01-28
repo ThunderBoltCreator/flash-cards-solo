@@ -1,1 +1,1 @@
-export { Profile } from './profile'
+export { Profile } from 'features/profile/ui/profile'

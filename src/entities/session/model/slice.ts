@@ -2,49 +2,46 @@ import type { RootState } from 'app/store/store'
 
 import { createSlice } from '@reduxjs/toolkit'
 import { sessionApi } from 'entities/session/api/session-api'
+import { userApi } from 'entities/user'
 
-type SessionSliceState =
-  | {
-      accessToken: null
-      isAuth: false
-    }
-  | {
-      accessToken: string
-      isAuth: true
-    }
+type SessionSliceState = {
+  isAuth: boolean
+}
 
 const initialState: SessionSliceState = {
-  accessToken: null,
   isAuth: false,
 }
 
 export const sessionSlice = createSlice({
   extraReducers: builder => {
     builder
-      .addMatcher(
-        sessionApi.endpoints.login.matchFulfilled,
-        (state: SessionSliceState, { payload }) => {
-          state.isAuth = true
-
-          if (state.isAuth) {
-            state.accessToken = payload.accessToken
-          }
-        }
-      )
+      .addMatcher(sessionApi.endpoints.login.matchFulfilled, (state: SessionSliceState) => {
+        state.isAuth = true
+        console.log('login')
+      })
       .addMatcher(sessionApi.endpoints.logout.matchFulfilled, (state: SessionSliceState) => {
-        state.accessToken = null
+        console.log('logout')
+        console.log(state.isAuth)
+        sessionApi.util.resetApiState()
+        state.isAuth = false
+        console.log(state.isAuth)
+      })
+      .addMatcher(userApi.endpoints.me.matchFulfilled, (state: SessionSliceState) => {
+        state.isAuth = true
+      })
+      .addMatcher(userApi.endpoints.me.matchRejected, (state: SessionSliceState) => {
         state.isAuth = false
       })
   },
   initialState,
   name: 'session',
   reducers: {
-    clearSession(state) {
-      state.accessToken = null
+    onLogout(state: SessionSliceState) {
       state.isAuth = false
     },
   },
 })
 
 export const selectIsAuth = (state: RootState) => state.session.isAuth
-export const { clearSession } = sessionSlice.actions
+
+export const { onLogout } = sessionSlice.actions
