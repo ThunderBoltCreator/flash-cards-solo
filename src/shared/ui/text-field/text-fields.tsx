@@ -1,7 +1,7 @@
 import type { FieldValues, UseControllerProps } from 'react-hook-form'
 
-import { useId } from 'react'
 import type { ComponentPropsWithoutRef, ReactElement } from 'react'
+import { useId } from 'react'
 import { useController } from 'react-hook-form'
 
 import { clsx } from 'clsx'

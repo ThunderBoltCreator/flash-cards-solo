@@ -6,8 +6,12 @@ import { Typography } from 'shared/ui/typography'
 export function LogoutButton() {
   const [logout] = useLogoutMutation()
 
+  const handleLogout = () => {
+    logout()
+  }
+
   return (
-    <Button icon={<LogoutIcon />} onClick={() => logout()} variant={'secondary'}>
+    <Button icon={<LogoutIcon />} onClick={handleLogout} variant={'secondary'}>
       <Typography variant={'subtitle2'}>Logout</Typography>
     </Button>
   )

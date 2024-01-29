@@ -19,8 +19,6 @@ export const userApi = baseApi.injectEndpoints({
 
         const patchResult = dispatch(
           userApi.util.updateQueryData('me', undefined, draft => {
-            console.log(draft)
-
             const newName = args.name
             const newAvatar = args.avatar
 
@@ -38,7 +36,6 @@ export const userApi = baseApi.injectEndpoints({
         try {
           await queryFulfilled
         } catch (e) {
-          console.log(e)
           patchResult.undo()
         } finally {
           avatar && URL.revokeObjectURL(avatar)

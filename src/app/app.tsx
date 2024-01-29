@@ -1,20 +1,17 @@
-import { Link, Outlet } from 'react-router-dom'
+import { Outlet } from 'react-router-dom'
 import { Flip, ToastContainer } from 'react-toastify'
 
-import { useAppSelector } from 'app/store/hooks'
-import { selectIsAuth } from 'entities/session'
 import { useMeQuery } from 'entities/user/api/user-api'
 import { Layout } from 'shared/layouts/layout'
-import { Avatar } from 'shared/ui/avatar'
-import { Button } from 'shared/ui/button'
-import { Header } from 'shared/ui/header/header'
+import { AppHeader } from 'widgets/header/app-header'
 
 export function App() {
   const { data: user, isError, isLoading } = useMeQuery()
 
-  const isAuth = useAppSelector(selectIsAuth)
+  const isAuth = !isError
 
-  console.log(isAuth)
+  console.log('isError', isError)
+
   if (isLoading) {
     return <div>Loading...</div>
   }
@@ -22,21 +19,7 @@ export function App() {
   return (
     <Layout
       className={'stand'}
-      header={
-        <Header
-          rightSlot={
-            isAuth ? (
-              <Link to={'/profile'}>
-                <Avatar alt={user?.name} src={user?.avatar} />
-              </Link>
-            ) : (
-              <Button as={Link} to={'/login'} variant={'secondary'}>
-                Sign In
-              </Button>
-            )
-          }
-        />
-      }
+      header={<AppHeader isAuth={isAuth} user={user} />}
       page={<Outlet context={{ isAuth } satisfies { isAuth: boolean }} />}
     >
       <ToastContainer

@@ -10,6 +10,7 @@ import { PasswordFields, TextFields } from 'shared/ui/text-field'
 import { Typography } from 'shared/ui/typography'
 
 import s from './sign-in.module.scss'
+
 type FieldsValues = {
   email: string
   password: string
@@ -28,8 +29,9 @@ export function SignIn() {
   const navigate = useNavigate()
 
   const onSubmit = (data: FieldsValues) => {
-    console.log(data)
-    login(data).finally(() => navigate('/profile'))
+    login(data)
+      .unwrap()
+      .then(() => navigate('/profile'))
   }
 
   return (
