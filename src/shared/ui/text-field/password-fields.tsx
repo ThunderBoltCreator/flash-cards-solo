@@ -1,7 +1,7 @@
 import type { FieldValues, UseControllerProps } from 'react-hook-form'
 import type { TextFieldProps } from 'shared/ui/text-field/text-fields'
 
-import { useState } from 'react'
+import { forwardRef, useState } from 'react'
 import { useController } from 'react-hook-form'
 
 import CloseEye from 'shared/assets/icons/close-eye'
@@ -12,31 +12,34 @@ type PasswordFieldProps = Omit<TextFieldProps, 'rightIcon' | 'type'> & {
   showPasswordInit?: boolean
 }
 
-function PasswordField({ disabled, showPasswordInit, ...props }: PasswordFieldProps) {
-  const [showPas, setShowPas] = useState(!!showPasswordInit)
-  const type = showPas ? 'text' : 'password'
+const PasswordField = forwardRef<HTMLInputElement, PasswordFieldProps>(
+  ({ disabled, showPasswordInit, ...props }, ref) => {
+    const [showPas, setShowPas] = useState(!!showPasswordInit)
+    const type = showPas ? 'text' : 'password'
 
-  const toggleShowPas = () => {
-    if (disabled) {
-      return
+    const toggleShowPas = () => {
+      if (disabled) {
+        return
+      }
+
+      setShowPas(!showPas)
     }
 
-    setShowPas(!showPas)
+    return (
+      <TextFields.base
+        disabled={disabled}
+        ref={ref}
+        {...props}
+        rightIcon={
+          <button disabled={disabled} onClick={toggleShowPas} type={'button'}>
+            {showPas ? <Eye /> : <CloseEye />}
+          </button>
+        }
+        type={type}
+      />
+    )
   }
-
-  return (
-    <TextFields.base
-      disabled={disabled}
-      {...props}
-      rightIcon={
-        <button disabled={disabled} onClick={toggleShowPas} type={'button'}>
-          {showPas ? <Eye /> : <CloseEye />}
-        </button>
-      }
-      type={type}
-    />
-  )
-}
+)
 
 type ControlledPasswordFieldProps<T extends FieldValues> = UseControllerProps<T> &
   Omit<PasswordFieldProps, 'id' | 'onChange' | 'value'>

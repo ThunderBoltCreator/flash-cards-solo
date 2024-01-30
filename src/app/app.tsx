@@ -8,9 +8,7 @@ import { AppHeader } from 'widgets/header/app-header'
 export function App() {
   const { data: user, isError, isLoading } = useMeQuery()
 
-  const isAuth = !isError
-
-  console.log('isError', isError)
+  const isAuth = !isError && !isLoading
 
   if (isLoading) {
     return <div>Loading...</div>

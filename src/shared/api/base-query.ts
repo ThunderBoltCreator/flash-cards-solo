@@ -21,6 +21,10 @@ export const baseQueryWithRefresh: BaseQueryFn<
   let res = await baseQuery(args, api, extraOptions)
 
   if (res.error && res.error.status === 401) {
+    if (api.endpoint === 'login') {
+      return res
+    }
+
     if (!mutex.isLocked()) {
       const release = await mutex.acquire()
 
@@ -34,7 +38,7 @@ export const baseQueryWithRefresh: BaseQueryFn<
       )
 
       if (refreshResult.meta?.response?.status === 204) {
-        baseQuery(args, api, extraOptions)
+        res = await baseQuery(args, api, extraOptions)
       } else {
         router.navigate('/login')
       }

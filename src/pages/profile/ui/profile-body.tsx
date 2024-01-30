@@ -7,7 +7,8 @@ import { Button } from 'shared/ui/button'
 import { Typography } from 'shared/ui/typography'
 import { LogoutButton } from 'widgets/logout/ui/logout-button'
 
-import s from 'pages/profile/profile.module.scss'
+import s from 'pages/profile/ui/profile.module.scss'
+
 type ProfileData = Omit<UserData, 'created' | 'updated'>
 type Props = {
   editMode: boolean

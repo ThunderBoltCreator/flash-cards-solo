@@ -10,7 +10,4 @@ export type UserDto = {
 
 export type User = Omit<UserDto, 'created' | 'updated'>
 
-export type UpdateUserRequest = {
-  avatar?: FormData
-  name?: string
-}
+export type UpdateUserRequest = FormData

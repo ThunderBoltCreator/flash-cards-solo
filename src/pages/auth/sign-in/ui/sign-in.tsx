@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 import { clsx } from 'clsx'
 import { useLoginMutation } from 'entities/session/api/session-api'
+import { errorHandler } from 'shared/lib/error-handling/error-handler'
 import { Button } from 'shared/ui/button'
 import { Card } from 'shared/ui/card/card'
 import { Checkboxes } from 'shared/ui/checkbox'
@@ -18,8 +19,8 @@ type FieldsValues = {
 }
 
 export function SignIn() {
-  const [login, { isLoading }] = useLoginMutation()
-  const { control, handleSubmit } = useForm<FieldsValues>({
+  const [login] = useLoginMutation()
+  const { control, handleSubmit, register } = useForm<FieldsValues>({
     defaultValues: {
       email: '',
       password: '',
@@ -28,10 +29,14 @@ export function SignIn() {
   })
   const navigate = useNavigate()
 
-  const onSubmit = (data: FieldsValues) => {
-    login(data)
-      .unwrap()
-      .then(() => navigate('/profile'))
+  const onSubmit = async (data: FieldsValues) => {
+    try {
+      await login(data).unwrap()
+      // console.log('ya tut')
+      navigate('/profile')
+    } catch (e: any) {
+      errorHandler(e)
+    }
   }
 
   return (
@@ -46,12 +51,7 @@ export function SignIn() {
         name={'email'}
         type={'email'}
       />
-      <PasswordFields.controlled
-        className={s.field}
-        control={control}
-        label={'Password'}
-        name={'password'}
-      />
+      <PasswordFields.base {...register('password')} className={s.field} label={'Password'} />
       <Checkboxes.controlled
         className={s.checkbox}
         control={control}
@@ -70,46 +70,4 @@ export function SignIn() {
       <Typography variant={'link2'}>Sign Up</Typography>
     </Card>
   )
-  // return (
-  //   <Card className={clsx(s.signIn)}>
-  //     <Typography className={s.title} variant={'h1'}>
-  //       Sign In
-  //     </Typography>
-  //     <form className={s.form}>
-  //       <div className={s.formBody}>
-  //         <div className={s.fields}>
-  //           <TextFields.controlled
-  //             className={s.field}
-  //             control={control}
-  //             label={'Email'}
-  //             name={'email'}
-  //             type={'email'}
-  //           />
-  //           <PasswordFields.controlled
-  //             className={s.field}
-  //             control={control}
-  //             label={'Password'}
-  //             name={'password'}
-  //           />
-  //         </div>
-  //         <Checkboxes.controlled
-  //           className={s.checkbox}
-  //           control={control}
-  //           label={'Remember me'}
-  //           name={'rememberMe'}
-  //         />
-  //         <div className={s.forgot}>
-  //           <a>Forgot Password?</a>
-  //         </div>
-  //       </div>
-  //       <Button className={s.buttonSubmit} fullWidth>
-  //         Sign In
-  //       </Button>
-  //     </form>
-  //     <Typography className={s.registerLabel} variant={'body2'}>
-  //       Don't have an account?
-  //     </Typography>
-  //     <Typography variant={'link2'}>Sign Up</Typography>
-  //   </Card>
-  // )
 }

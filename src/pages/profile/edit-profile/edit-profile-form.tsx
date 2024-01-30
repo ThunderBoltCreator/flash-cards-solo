@@ -1,11 +1,10 @@
-import type { ProfileData } from 'features/profile/ui/profile'
-
-import { useState } from 'react'
 import type { ChangeEvent } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useUpdateUserMutation } from 'entities/user/api/user-api'
 import ArrowBack from 'shared/assets/icons/arrow-back'
 import EditIcon from 'shared/assets/icons/edit-icon'
 import { ACCEPTED_IMAGES_FORMATS, IMAGE_MAX_SIZE } from 'shared/const'
@@ -16,6 +15,7 @@ import { TextFields } from 'shared/ui/text-field'
 import { ZodError, z } from 'zod'
 
 import s from './edit-profile-form.module.scss'
+
 type EditProfileFormProps = {
   formData: {
     avatar: string
@@ -24,12 +24,8 @@ type EditProfileFormProps = {
   onClose: () => void
 }
 
-type FormState = {
-  name: string
-}
-
-const editProfileSchema = z.object({
-  name: z.string().max(10),
+const nicknameSchema = z.object({
+  name: z.string().max(10).min(3),
 })
 
 const imageSchema = z
@@ -43,39 +39,53 @@ const imageSchema = z
     'Only .jpg, .jpeg, .png, .svg and .webp formats are supported. The file will not be uploaded.'
   )
 
+type Fields = { name: string }
 export function EditProfileForm({ formData, onClose }: EditProfileFormProps) {
+  const [img, setImg] = useState<File | null | string>(null)
+
+  const [update] = useUpdateUserMutation()
   const {
-    control,
     formState: { errors },
     handleSubmit,
-  } = useForm<FormState>({
-    resolver: zodResolver(editProfileSchema),
+    register,
+  } = useForm<Fields>({
+    mode: 'onChange',
+    resolver: zodResolver(nicknameSchema),
   })
-  const [newImg, setNewImg] = useState(formData.avatar)
 
-  const onSubmit = (data: FormState) => {
-    onClose()
+  const validAvatar = img instanceof File
+
+  const onSubmit = async (data: Fields) => {
+    const formData = new FormData()
+
+    formData.append('name', data.name)
+    if (validAvatar) {
+      formData.append('avatar', img)
+    }
+
+    update(formData)
+      .unwrap()
+      .then(() => onClose())
   }
-
   const onChangeImage = (e: ChangeEvent<HTMLInputElement>) => {
     try {
       const ava = e.target.files?.[0]
 
       if (ava) {
-        setNewImg(URL.createObjectURL(ava))
         imageSchema?.parse(ava)
+        setImg(ava)
       }
     } catch (e) {
       const error = e as ZodError
 
-      toast(error.errors[0].message)
+      toast.error(error.errors[0].message)
     }
   }
 
   return (
     <form className={s.root} onSubmit={handleSubmit(onSubmit)}>
       <div className={s.avatarWrapper}>
-        <Avatar size={96} src={newImg} />
+        <Avatar size={96} src={validAvatar ? URL.createObjectURL(img) : formData.avatar} />
         <ImageUploader
           className={s.imageUploader}
           onChange={onChangeImage}
@@ -84,18 +94,20 @@ export function EditProfileForm({ formData, onClose }: EditProfileFormProps) {
           }
         />
       </div>
-      <TextFields.controlled
+
+      <TextFields.base
+        {...register('name')}
         className={s.nickname}
-        control={control}
         defaultValue={formData.name}
         errorMessage={errors.name?.message}
         label={'Nickname'}
         name={'name'}
       />
-
       <div className={s.buttonsBlock}>
         <Button icon={<ArrowBack />} onClick={onClose} type={'button'} variant={'secondary'} />
-        <Button fullWidth>Save Changes</Button>
+        <Button fullWidth type={'submit'}>
+          Save Changes
+        </Button>
       </div>
     </form>
   )

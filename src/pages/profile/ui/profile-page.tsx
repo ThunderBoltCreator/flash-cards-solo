@@ -2,11 +2,11 @@ import { useState } from 'react'
 
 import { clsx } from 'clsx'
 import { useMeQuery } from 'entities/user/api/user-api'
-import { ProfileBody } from 'features/profile/ui/profile-body'
+import { ProfileBody } from 'pages/profile/ui/profile-body'
 import { Card } from 'shared/ui/card/card'
 import { Typography } from 'shared/ui/typography'
 
-import s from 'pages/profile/profile.module.scss'
+import s from 'pages/profile/ui/profile.module.scss'
 
 export function ProfilePage() {
   const { data: user } = useMeQuery()

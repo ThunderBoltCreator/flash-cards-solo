@@ -5,7 +5,7 @@ import { baseApi } from 'shared/api/base-api'
 export const sessionApi = baseApi.injectEndpoints({
   endpoints: build => ({
     login: build.mutation<ResponseLoginBody, RequestLoginBody>({
-      invalidatesTags: ['ME'],
+      invalidatesTags: (_, error) => (error ? [] : ['ME']),
       query: arg => {
         return {
           body: arg,
@@ -15,6 +15,7 @@ export const sessionApi = baseApi.injectEndpoints({
       },
     }),
     logout: build.mutation<void, void>({
+      invalidatesTags: (_, error) => (error ? [] : ['ME']),
       query: () => ({ method: 'POST', url: '/v1/auth/logout' }),
     }),
   }),

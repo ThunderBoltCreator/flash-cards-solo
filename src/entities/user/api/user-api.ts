@@ -19,8 +19,8 @@ export const userApi = baseApi.injectEndpoints({
 
         const patchResult = dispatch(
           userApi.util.updateQueryData('me', undefined, draft => {
-            const newName = args.name
-            const newAvatar = args.avatar
+            const newName = args.get('name')
+            const newAvatar = args.get('avatar')
 
             if (draft && newAvatar instanceof File) {
               avatar = URL.createObjectURL(newAvatar)
@@ -28,7 +28,7 @@ export const userApi = baseApi.injectEndpoints({
             }
 
             if (draft && newName) {
-              draft.name = newName
+              draft.name = newName as string
             }
           })
         )
@@ -44,7 +44,7 @@ export const userApi = baseApi.injectEndpoints({
       query: args => ({
         body: args,
         method: 'PATCH',
-        url: 'v1/auth/me',
+        url: '/v1/auth/me',
       }),
     }),
   }),
