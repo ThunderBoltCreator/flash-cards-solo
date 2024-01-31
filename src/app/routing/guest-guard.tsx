@@ -1,9 +1,7 @@
-import { Navigate, Outlet } from 'react-router-dom'
-
-import { useMeQuery } from 'entities/user/api/user-api'
+import { Navigate, Outlet, useOutletContext } from 'react-router-dom'
 
 export function GuestGuard() {
-  const { isError } = useMeQuery()
+  const { isAuth } = useOutletContext<{ isAuth: boolean }>()
 
-  return !isError ? <Navigate to={'/'} /> : <Outlet />
+  return isAuth ? <Navigate to={'/'} /> : <Outlet />
 }

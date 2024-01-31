@@ -4,13 +4,15 @@ import { createBrowserRouter } from 'react-router-dom'
 
 import { App } from 'app/app'
 import { AuthGuard } from 'app/routing/auth-guard'
+import { GuestGuard } from 'app/routing/guest-guard'
 import { SignIn } from 'pages/auth/sign-in'
 import { SignUp } from 'pages/auth/sign-up'
+import { DecksPage } from 'pages/decks/ui/decks-page'
 import { ProfilePage } from 'pages/profile/ui/profile-page'
 
 const privateRoutes: RouteObject[] = [
   {
-    element: <div>Hello</div>,
+    element: <DecksPage />,
     path: '/',
   },
   {
@@ -36,7 +38,10 @@ export const router = createBrowserRouter([
         children: privateRoutes,
         element: <AuthGuard />,
       },
-      ...publicRoutes,
+      {
+        children: publicRoutes,
+        element: <GuestGuard />,
+      },
     ],
     element: <App />,
     path: '/',
