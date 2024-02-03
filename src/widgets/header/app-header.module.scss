@@ -1,0 +1,54 @@
+.header {
+  background-color: var(--color-dark-700);
+}
+
+.trigger {
+  cursor: pointer;
+  background-color: transparent;
+  transition: .3s;
+
+  &:hover {
+    filter: drop-shadow(0 0 6px var(--color-accent-100));
+  }
+}
+
+
+.userMenu {
+  display: flex;
+  gap: 0.87rem;
+  align-items: center;
+}
+
+.rootLink {
+  text-decoration: none;
+  border-bottom: 2px dashed var(--color-light-100);
+  transition: .3s;
+
+  &:hover {
+    color: var(--color-accent-100);
+    border-color: var(--color-accent-100);
+  }
+}
+
+.link {
+  span,svg {
+    cursor: pointer;
+    transition: .3s;
+  }
+
+  &:hover {
+    span {
+      color: var(--color-accent-100);
+    }
+
+    svg {
+      fill: var(--color-accent-100);
+    }
+  }
+}
+
+.user {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}

@@ -1,5 +1,6 @@
-import { forwardRef, memo } from 'react'
 import type { Ref, SVGProps } from 'react'
+import { forwardRef, memo } from 'react'
+
 const LogoutIcon = (props: SVGProps<SVGSVGElement>, ref: Ref<SVGSVGElement>) => (
   <svg
     fill={'none'}

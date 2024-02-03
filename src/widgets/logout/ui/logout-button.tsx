@@ -1,5 +1,5 @@
 import { useLogoutMutation } from 'entities/session'
-import LogoutIcon from 'shared/assets/icons/log-out'
+import LogoutIcon from 'shared/assets/icons/logout-icon'
 import { Button } from 'shared/ui/button'
 import { Typography } from 'shared/ui/typography'
 

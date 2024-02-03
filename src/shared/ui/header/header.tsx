@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react'
+import { Link } from 'react-router-dom'
 
 import { clsx } from 'clsx'
 import Logo from 'shared/Logo'
@@ -15,7 +16,9 @@ export function Header({ className, rightSlot }: HeaderProps) {
 
   return (
     <header className={styles}>
-      <Logo />
+      <Link to={'/'}>
+        <Logo />
+      </Link>
       {rightSlot}
     </header>
   )
