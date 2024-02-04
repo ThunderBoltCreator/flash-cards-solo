@@ -1,11 +1,7 @@
-.root {
-  display: flex;
-  gap: 7px;
-}
-
 .pagination {
   display: flex;
   gap: 12px;
+  align-items: center;
 }
 
 .item {
@@ -30,5 +26,19 @@
 
 
 .arrow {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   background-color: transparent;
+}
+
+.prevPage {
+  transform: rotate(-90deg);
+}
+
+.nextPage {
+  transform: rotate(90deg);
 }

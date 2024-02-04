@@ -1,11 +1,11 @@
 import { clsx } from 'clsx'
+import ChevronLeftIcon from 'shared/assets/icons/chevron-left-icon'
 import { usePagination } from 'shared/ui/pagination/usePagination'
-import { Select } from 'shared/ui/select'
 import { Typography } from 'shared/ui/typography'
 
 import s from './pagination.module.scss'
 
-type PaginationDto = {
+export type PaginationDto = {
   currentPage: number
   itemsPerPage: number
   totalItems: number
@@ -23,56 +23,42 @@ export function Pagination({ pagination }: PaginationProps) {
     totalPages: pagination.totalPages,
   })
 
-  console.log(paginate)
-
   return (
-    <div className={s.root}>
-      <button className={clsx(s.arrow, s.prevPage)}>{'<'}</button>
-      <div className={s.pagination}>
-        {paginate?.map((el, i) => {
-          if (typeof el === 'string') {
-            return (
-              <span className={s.dots} key={i}>
-                {el}
-              </span>
-            )
-          }
-
-          if (el === pagination.currentPage) {
-            return (
-              <Typography as={'span'} className={clsx(s.item, s.active)} key={i} variant={'body2'}>
-                {el}
-              </Typography>
-            )
-          }
-
+    <div className={s.pagination}>
+      <button className={clsx(s.arrow, s.prevPage)} disabled={pagination.currentPage === 1}>
+        <ChevronLeftIcon />
+      </button>
+      {paginate?.map((el, i) => {
+        if (typeof el === 'string') {
           return (
-            <button className={clsx(s.item)} key={i}>
-              <Typography as={'span'} variant={'body2'}>
-                {el}
-              </Typography>
-            </button>
+            <span className={s.dots} key={i}>
+              {el}
+            </span>
           )
-        })}
-      </div>
-      <button className={clsx(s.arrow, s.nextPage)}>{'>'}</button>
-      <Select
-        options={[
-          {
-            title: '5',
-            value: '5',
-          },
-          {
-            title: '10',
-            value: '10',
-          },
-          {
-            title: '15',
-            value: '15',
-          },
-        ]}
-        pagination
-      />
+        }
+
+        if (el === pagination.currentPage) {
+          return (
+            <Typography as={'span'} className={clsx(s.item, s.active)} key={i} variant={'body2'}>
+              {el}
+            </Typography>
+          )
+        }
+
+        return (
+          <button className={clsx(s.item)} key={i}>
+            <Typography as={'span'} variant={'body2'}>
+              {el}
+            </Typography>
+          </button>
+        )
+      })}
+      <button
+        className={clsx(s.arrow, s.nextPage)}
+        disabled={pagination.currentPage === pagination.totalPages}
+      >
+        <ChevronLeftIcon />
+      </button>
     </div>
   )
 }

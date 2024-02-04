@@ -1,3 +1,4 @@
+import { PagePaginate } from 'features/page-paginate/ui/page-paginate'
 import { Pagination } from 'shared/ui/pagination'
 import { Table } from 'shared/ui/table'
 
@@ -32,7 +33,10 @@ export function DecksPage() {
       {/*  ]}*/}
       {/*  pagination*/}
       {/*/>*/}
-      <Pagination
+      {/*<Pagination*/}
+      {/*  pagination={{ currentPage: 6, itemsPerPage: 5, totalItems: 75, totalPages: 15 }}*/}
+      {/*/>*/}
+      <PagePaginate
         pagination={{ currentPage: 6, itemsPerPage: 5, totalItems: 75, totalPages: 15 }}
       />
     </div>
