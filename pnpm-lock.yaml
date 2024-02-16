@@ -142,6 +142,9 @@ devDependencies:
   vite:
     specifier: ^5.0.8
     version: 5.0.10(@types/node@20.10.6)(sass@1.69.7)
+  vite-plugin-circular-dependency:
+    specifier: ^0.3.0
+    version: 0.3.0
 
 packages:
 
@@ -9980,6 +9983,15 @@ packages:
   /vary@1.1.2:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
+    dev: true
+
+  /vite-plugin-circular-dependency@0.3.0:
+    resolution: {integrity: sha512-jsmwm9ZrRZBjaMapNKQMhdq41Mimi0CsDQDASxR5h4ZqMUeVOS6wxzVn0zQUwMx7vllVT5WNLuwbt2M5csmpUw==}
+    dependencies:
+      '@rollup/pluginutils': 5.1.0
+      chalk: 4.1.2
+    transitivePeerDependencies:
+      - rollup
     dev: true
 
   /vite-tsconfig-paths@4.2.3(typescript@5.3.3)(vite@5.0.10):

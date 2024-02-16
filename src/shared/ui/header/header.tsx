@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 
-import { clsx } from 'clsx'
 import Logo from 'shared/Logo'
+import { Container } from 'shared/layouts/container'
 
 import s from './header.module.scss'
 
@@ -11,15 +11,15 @@ type HeaderProps = {
   rightSlot: ReactNode | null
 }
 
-export function Header({ className, rightSlot }: HeaderProps) {
-  const styles = clsx(s.root, className)
-
+export function Header({ rightSlot }: HeaderProps) {
   return (
-    <header className={styles}>
-      <Link to={'/'}>
-        <Logo />
-      </Link>
-      {rightSlot}
+    <header className={s.header}>
+      <Container className={s.root}>
+        <Link to={'/'}>
+          <Logo />
+        </Link>
+        {rightSlot}
+      </Container>
     </header>
   )
 }

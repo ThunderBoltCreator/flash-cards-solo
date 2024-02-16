@@ -1,14 +1,10 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { useState } from 'react'
-
 import { Slider } from 'shared/ui/slider/slider'
 
 // @ts-ignore
 const SliderStory = props => {
-  const [value, setValue] = useState<number[]>([10, 25])
-
-  return <Slider onValueChange={setValue} value={value} {...props} />
+  return <Slider max={61} min={0} {...props} />
 }
 
 const meta = {

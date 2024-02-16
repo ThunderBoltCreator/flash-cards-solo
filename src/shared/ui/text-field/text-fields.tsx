@@ -14,6 +14,7 @@ export type TextFieldProps = {
   errorMessage?: string
   label?: string
   leftIcon?: ReactElement | null
+  onValueChange?: (value: string) => void
   rightIcon?: ReactElement | null
 } & ComponentPropsWithoutRef<'input'>
 

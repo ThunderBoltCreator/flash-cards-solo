@@ -1,3 +1,5 @@
+import type { User } from 'entities/user/api/types'
+
 import { Outlet } from 'react-router-dom'
 import { Flip, ToastContainer } from 'react-toastify'
 
@@ -16,9 +18,10 @@ export function App() {
 
   return (
     <Layout
-      className={'stand'}
       header={<AppHeader isAuth={isAuth} user={user} />}
-      page={<Outlet context={{ isAuth } satisfies { isAuth: boolean }} />}
+      page={
+        <Outlet context={{ isAuth, user } satisfies { isAuth: boolean; user: User | undefined }} />
+      }
     >
       <ToastContainer
         autoClose={3000}

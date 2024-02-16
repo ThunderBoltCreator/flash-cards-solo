@@ -1,3 +1,9 @@
+.root {
+  display: inline-flex;
+  flex-direction: column;
+  width: 250px;
+}
+
 .container {
   display: flex;
   gap: 12px;
@@ -5,11 +11,12 @@
 }
 
 .score {
-  width: 36px;
-  height: 36px;
+  max-width: 36px;
   font-weight: 400;
 
   & input {
+    width: 36px;
+    height: 36px;
     padding: 5px;
     text-align: center;
 

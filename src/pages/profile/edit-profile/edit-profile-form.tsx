@@ -41,9 +41,9 @@ const imageSchema = z
 
 type Fields = { name: string }
 export function EditProfileForm({ formData, onClose }: EditProfileFormProps) {
-  const [img, setImg] = useState<File | null | string>(null)
-
   const [update] = useUpdateUserMutation()
+
+  const [img, setImg] = useState<File | null | string>(null)
   const {
     formState: { errors },
     handleSubmit,
@@ -53,13 +53,13 @@ export function EditProfileForm({ formData, onClose }: EditProfileFormProps) {
     resolver: zodResolver(nicknameSchema),
   })
 
-  const validAvatar = img instanceof File
+  const isValidAvatar = img instanceof File
 
   const onSubmit = async (data: Fields) => {
     const formData = new FormData()
 
     formData.append('name', data.name)
-    if (validAvatar) {
+    if (isValidAvatar) {
       formData.append('avatar', img)
     }
 
@@ -85,7 +85,7 @@ export function EditProfileForm({ formData, onClose }: EditProfileFormProps) {
   return (
     <form className={s.root} onSubmit={handleSubmit(onSubmit)}>
       <div className={s.avatarWrapper}>
-        <Avatar size={96} src={validAvatar ? URL.createObjectURL(img) : formData.avatar} />
+        <Avatar size={96} src={isValidAvatar ? URL.createObjectURL(img) : formData.avatar} />
         <ImageUploader
           className={s.imageUploader}
           onChange={onChangeImage}

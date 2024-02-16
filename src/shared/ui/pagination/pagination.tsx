@@ -13,9 +13,10 @@ export type PaginationDto = {
 }
 
 type PaginationProps = {
+  changePage: (page: number) => void
   pagination: PaginationDto
 }
-export function Pagination({ pagination }: PaginationProps) {
+export function Pagination({ changePage, pagination }: PaginationProps) {
   const paginate = usePagination({
     currentPage: pagination.currentPage,
     pageSize: pagination.itemsPerPage,
@@ -23,9 +24,24 @@ export function Pagination({ pagination }: PaginationProps) {
     totalPages: pagination.totalPages,
   })
 
+  const onClickNext = () => {
+    changePage(pagination.currentPage + 1)
+  }
+  const onClickPrev = () => {
+    changePage(pagination.currentPage - 1)
+  }
+
+  const onClickPaginate = (page: number) => {
+    changePage(page)
+  }
+
   return (
     <div className={s.pagination}>
-      <button className={clsx(s.arrow, s.prevPage)} disabled={pagination.currentPage === 1}>
+      <button
+        className={clsx(s.arrow, s.prevPage)}
+        disabled={pagination.currentPage === 1}
+        onClick={onClickPrev}
+      >
         <ChevronLeftIcon />
       </button>
       {paginate?.map((el, i) => {
@@ -46,7 +62,7 @@ export function Pagination({ pagination }: PaginationProps) {
         }
 
         return (
-          <button className={clsx(s.item)} key={i}>
+          <button className={clsx(s.item)} key={i} onClick={() => onClickPaginate(el)}>
             <Typography as={'span'} variant={'body2'}>
               {el}
             </Typography>
@@ -56,6 +72,7 @@ export function Pagination({ pagination }: PaginationProps) {
       <button
         className={clsx(s.arrow, s.nextPage)}
         disabled={pagination.currentPage === pagination.totalPages}
+        onClick={onClickNext}
       >
         <ChevronLeftIcon />
       </button>

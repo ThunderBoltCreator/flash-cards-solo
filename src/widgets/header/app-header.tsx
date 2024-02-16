@@ -23,7 +23,6 @@ export function AppHeader({ isAuth, user }: Props) {
   if (isAuth) {
     return (
       <Header
-        className={s.header}
         rightSlot={
           <div className={s.userMenu}>
             <Typography as={Link} className={s.rootLink} to={'/profile'} variant={'subtitle1'}>

@@ -1,7 +1,9 @@
+import type { User } from 'entities/user/api/types'
+
 import { Navigate, Outlet, useOutletContext } from 'react-router-dom'
 
 export function AuthGuard() {
-  const { isAuth } = useOutletContext<{ isAuth: boolean }>()
+  const { isAuth, user } = useOutletContext<{ isAuth: boolean; user: User | undefined }>()
 
-  return isAuth ? <Outlet /> : <Navigate to={'/login'} />
+  return isAuth ? <Outlet context={{ user }} /> : <Navigate to={'/login'} />
 }

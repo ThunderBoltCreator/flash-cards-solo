@@ -1,38 +1,38 @@
 import type { PaginationDto } from 'shared/ui/pagination/pagination'
 
-import { useState } from 'react'
-
-import { usePaginateDecksQuery } from 'features/page-paginate/api/pagination-api'
 import { Pagination } from 'shared/ui/pagination'
 import { Select } from 'shared/ui/select'
 import { Typography } from 'shared/ui/typography'
 
 import s from 'features/page-paginate/ui/page-paginate.module.scss'
+
 type PagePaginateProps = {
+  changeItemsCount: (itemsCount: number) => void
+  changePage: (page: number) => void
   pagination: PaginationDto
 }
-export function PagePaginate({ pagination }: PagePaginateProps) {
-  const [itemsCount, setItemsCount] = useState(pagination.itemsPerPage.toString())
+export function PagePaginate({ changeItemsCount, changePage, pagination }: PagePaginateProps) {
+  console.log(pagination)
 
-  const { data } = usePaginateDecksQuery({
-    currentPage: '3',
-    itemsPerPage: '10',
-    orderBy: 'name-desc',
-  })
-
-  console.log(data)
+  const handleChangeItemsCountPerPage = (value: string) => {
+    changeItemsCount(+value)
+  }
 
   return (
     <div className={s.root}>
-      <Pagination pagination={pagination} />
+      <Pagination changePage={changePage} pagination={pagination} />
       <div className={s.select}>
         <Typography variant={'body2'}>Показать</Typography>
         <Select
-          onValueChange={setItemsCount}
+          onValueChange={handleChangeItemsCountPerPage}
           options={[
             {
               title: '5',
               value: '5',
+            },
+            {
+              title: '7',
+              value: '7',
             },
             {
               title: '10',
@@ -44,7 +44,7 @@ export function PagePaginate({ pagination }: PagePaginateProps) {
             },
           ]}
           pagination
-          value={itemsCount}
+          value={pagination.itemsPerPage.toString()}
         />
         <Typography variant={'body2'}>на странице</Typography>
       </div>

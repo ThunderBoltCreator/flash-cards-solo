@@ -2,6 +2,7 @@ import type { ComponentPropsWithoutRef, ElementRef } from 'react'
 import { forwardRef } from 'react'
 
 import { clsx } from 'clsx'
+import imagePlug from 'shared/assets/image-plug.png'
 import { Typography } from 'shared/ui/typography'
 
 import s from './table.module.scss'
@@ -46,10 +47,10 @@ const Row = forwardRef<ElementRef<'tr'>, ComponentPropsWithoutRef<'tr'>>(
   }
 )
 
-const TitleCell = forwardRef<ElementRef<'th'>, ComponentPropsWithoutRef<'th'>>(
+const HeadCell = forwardRef<ElementRef<'th'>, ComponentPropsWithoutRef<'th'>>(
   ({ children, className, ...restProps }, ref) => {
     return (
-      <th className={clsx(s.title, className)} ref={ref} {...restProps}>
+      <th className={clsx(s.headCell, className)} ref={ref} {...restProps}>
         <Typography as={'span'} variant={'subtitle2'}>
           {children}
         </Typography>
@@ -58,10 +59,22 @@ const TitleCell = forwardRef<ElementRef<'th'>, ComponentPropsWithoutRef<'th'>>(
   }
 )
 
-const Cell = forwardRef<ElementRef<'td'>, ComponentPropsWithoutRef<'td'>>(
-  ({ children, className, ...restProps }, ref) => {
+type TableCell = { cover?: null | string } & ComponentPropsWithoutRef<'td'>
+const Cell = forwardRef<ElementRef<'td'>, TableCell>(
+  ({ children, className, cover, ...restProps }, ref) => {
     return (
       <td className={clsx(s.cell, className)} ref={ref} {...restProps}>
+        {cover === null ? (
+          <div>
+            <img alt={'Image Plug'} src={imagePlug} />
+          </div>
+        ) : (
+          cover && (
+            <div>
+              <img alt={'Deck Cover'} src={cover} />
+            </div>
+          )
+        )}
         <Typography as={'span'} variant={'body2'}>
           {children}
         </Typography>
@@ -70,4 +83,4 @@ const Cell = forwardRef<ElementRef<'td'>, ComponentPropsWithoutRef<'td'>>(
   }
 )
 
-export const Table = { Body, Cell, Head, Root, Row, TitleCell }
+export const Table = { Body, Cell, Head, HeadCell, Root, Row }
