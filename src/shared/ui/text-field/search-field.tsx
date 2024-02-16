@@ -1,21 +1,30 @@
 import type { TextFieldProps } from 'shared/ui/text-field/text-fields'
 
-import { useId, useState } from 'react'
 import type { ChangeEvent } from 'react'
+import { useId, useState } from 'react'
 
 import Cross from 'shared/assets/icons/cross'
 import Loup from 'shared/assets/icons/loup'
 import { TextFields } from 'shared/ui/text-field/text-fields'
+
 export type SearchFieldProps = {
   onButtonClick?: () => void
 } & Omit<TextFieldProps, 'leftIcon' | 'rightIcon' | 'type'> & {}
 
-export function SearchField({ onButtonClick, ...props }: SearchFieldProps) {
+export function SearchField({ onButtonClick, onValueChange, ...props }: SearchFieldProps) {
   const id = useId()
   const [value, setValue] = useState('')
 
   const onChangeField = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.currentTarget.value)
+    const value = e.currentTarget.value
+
+    setValue(value)
+    onValueChange?.(value)
+  }
+
+  const handleInputClear = () => {
+    onValueChange?.('')
+    setValue('')
   }
 
   const SearchIconLabel = (
@@ -31,7 +40,7 @@ export function SearchField({ onButtonClick, ...props }: SearchFieldProps) {
   )
 
   const ClearInputIcon = (
-    <button onClick={() => setValue('')}>
+    <button onClick={handleInputClear}>
       <Cross />
     </button>
   )

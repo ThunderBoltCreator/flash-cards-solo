@@ -1,0 +1,59 @@
+.root {
+  width: 100%;
+  padding: 33px 0 0;
+}
+
+.title {
+  margin-bottom: 10px;
+}
+
+.sort {
+  margin-bottom: 36px;
+}
+
+.table {
+  width: 100%;
+  text-align: left;
+}
+
+.cardsCountColumn {
+  width: 140px;
+}
+
+.updatedColumn {
+  width: 200px;
+}
+
+.createdColumn {
+  width: 240px;
+}
+
+.deckName {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  div {
+    width: 70px;
+  }
+
+  img {
+  max-width: 70px;
+  height: 50px;
+  object-fit: cover;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+.actionButton {
+  background-color: transparent;
+
+  svg {
+    cursor: pointer;
+    fill: #FFF;
+  }
+}

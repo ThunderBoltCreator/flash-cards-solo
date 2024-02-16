@@ -1,18 +1,23 @@
 import type { ReactNode } from 'react'
 
+import { Container } from 'shared/layouts/container'
+
+import s from './layout.module.scss'
+
 type LayoutProps = {
   children?: ReactNode
-  className?: string
   header?: ReactNode
   page?: ReactNode
 }
 
-export function Layout({ children, className, header, page }: LayoutProps) {
+export function Layout({ children, header, page }: LayoutProps) {
   return (
-    <div className={className}>
+    <>
       {header}
-      <main>{page}</main>
+      <main>
+        <Container className={s.container}>{page}</Container>
+      </main>
       {children}
-    </div>
+    </>
   )
 }

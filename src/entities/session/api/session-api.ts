@@ -6,13 +6,11 @@ export const sessionApi = baseApi.injectEndpoints({
   endpoints: build => ({
     login: build.mutation<ResponseLoginBody, RequestLoginBody>({
       invalidatesTags: (_, error) => (error ? [] : ['ME']),
-      query: arg => {
-        return {
-          body: arg,
-          method: 'POST',
-          url: '/v1/auth/login',
-        }
-      },
+      query: arg => ({
+        body: arg,
+        method: 'POST',
+        url: '/v1/auth/login',
+      }),
     }),
     logout: build.mutation<void, void>({
       invalidatesTags: (_, error) => (error ? [] : ['ME']),

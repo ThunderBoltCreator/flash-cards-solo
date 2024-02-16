@@ -74,8 +74,12 @@
 
 .item {
   cursor: pointer;
+
   padding: 0.37rem 0.69rem;
+
+  background-color: var(--color-dark-900);
   outline: none;
+
   transition: background-color .4s;
 
   &:hover {

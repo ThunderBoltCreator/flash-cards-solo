@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { CardSwitcher } from 'widgets/card-switcher/ui/card-switcher'
+import { DecksSwitcher } from 'features/card-switcher'
 
 const meta = {
   argTypes: {},
-  component: CardSwitcher,
+  component: DecksSwitcher,
   tags: ['autodocs'],
-  title: 'Components/CardSwitcher',
-} satisfies Meta<typeof CardSwitcher>
+  title: 'Components/DecksSwitcher',
+} satisfies Meta<typeof DecksSwitcher>
 
 export default meta
 type Story = StoryObj<typeof meta>

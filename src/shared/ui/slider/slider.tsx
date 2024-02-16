@@ -1,23 +1,36 @@
-import { useState } from 'react'
-import type { ComponentPropsWithoutRef, KeyboardEvent } from 'react'
+import type { ComponentPropsWithoutRef, KeyboardEvent, ReactNode } from 'react'
+import { useEffect, useState } from 'react'
 
 import * as Sl from '@radix-ui/react-slider'
 import { clsx } from 'clsx'
 import { isValidInputValue } from 'shared/lib/reg-exp/isValidInputValue'
 import { TextFields } from 'shared/ui/text-field'
+import { Typography } from 'shared/ui/typography'
 
 import s from './slider.module.scss'
+
 export function Slider({
   className,
+  defaultValue,
   disabled,
-  max = 10,
+  label,
+  max = 61,
   min = 0,
   onValueChange,
+  onValueCommit,
   step,
   value,
   ...props
-}: ComponentPropsWithoutRef<typeof Sl.Root>) {
+}: ComponentPropsWithoutRef<typeof Sl.Root> & { label?: ReactNode }) {
   const [inputValues, setInputValues] = useState<(number | string)[]>(value ?? [min, max])
+
+  useEffect(() => {
+    if (value) {
+      if (inputValues[0] !== value?.[0] || inputValues[1] !== value?.[1]) {
+        setInputValues(value)
+      }
+    }
+  }, [value])
 
   const styles = {
     container: clsx(s.container, className),
@@ -58,6 +71,7 @@ export function Slider({
 
     setInputValues(newValuesSort)
     onValueChange?.(newValuesSort)
+    onValueCommit?.(newValuesSort)
   }
 
   const onPressEnter = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -72,12 +86,14 @@ export function Slider({
   }
 
   const onSliderChange = (value: number[]) => {
-    onValueChange?.(value)
+    console.log('slider value changed', value)
     setInputValues(value)
+    onValueChange?.(value)
   }
 
   return (
-    <>
+    <div className={s.root}>
+      <Typography variant={'body2'}>{label}</Typography>
       <div className={styles.container}>
         <TextFields.base
           className={styles.score}
@@ -85,7 +101,6 @@ export function Slider({
           onBlur={onBlur}
           onChange={e => onInputChange(0, e.currentTarget.value)}
           onKeyDown={onPressEnter}
-          type={'number'}
           value={inputValues[0]}
         />
         <Sl.Root
@@ -94,6 +109,7 @@ export function Slider({
           max={max}
           min={min}
           onValueChange={onSliderChange}
+          onValueCommit={onValueCommit}
           step={step || 1}
           value={value}
           {...props}
@@ -110,10 +126,9 @@ export function Slider({
           onBlur={onBlur}
           onChange={e => onInputChange(1, e.currentTarget.value)}
           onKeyDown={onPressEnter}
-          type={'number'}
           value={inputValues[1]}
         />
       </div>
-    </>
+    </div>
   )
 }
