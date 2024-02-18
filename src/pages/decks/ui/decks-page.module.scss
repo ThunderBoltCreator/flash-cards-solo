@@ -14,6 +14,7 @@
 .table {
   width: 100%;
   text-align: left;
+  margin-bottom: 1.5rem;
 }
 
 .cardsCountColumn {
@@ -38,9 +39,9 @@
   }
 
   img {
-  max-width: 70px;
-  height: 50px;
-  object-fit: cover;
+    max-width: 70px;
+    height: 50px;
+    object-fit: cover;
   }
 }
 
@@ -54,6 +55,6 @@
 
   svg {
     cursor: pointer;
-    fill: #FFF;
+    fill: #fff;
   }
 }

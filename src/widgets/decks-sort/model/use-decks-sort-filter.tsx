@@ -19,7 +19,7 @@ export const useDecksSortFilter = () => {
   }
 
   const changeDecksAuthorFilter = (newAuthor: string) => {
-    params.set('decks', newAuthor)
+    params.set('author', newAuthor)
     setParams(params)
   }
 

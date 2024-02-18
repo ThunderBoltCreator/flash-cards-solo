@@ -24,10 +24,12 @@ type SearchParams = {
   name?: null | string
   orderBy?: null | string
 }
+
 export function DecksPage() {
   const { user } = useOutletContext<{ user: User }>()
 
   const {
+    authorForShow,
     changeCurrentPage,
     changeDecksAuthorFilter,
     changeItemsCountPerPage,
@@ -35,7 +37,6 @@ export function DecksPage() {
     changeSearchName,
     clearFilter,
     currentPage,
-    authorForShow,
     itemsPerPage,
     maxCardsCount,
     minCardsCount,
